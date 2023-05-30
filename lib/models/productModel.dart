@@ -1,4 +1,5 @@
 import 'package:fresh_bits_test/localDB/databaseHelper.dart';
+import 'package:get/get.dart';
 
 class ProductModel{
 
@@ -6,7 +7,7 @@ class ProductModel{
   var proName;
   var proPrice;
   var proImage;
-  var proInCart;
+  RxBool proInCart = false.obs;
 
   ProductModel({required this.id, required this.proName,required this.proPrice, required this.proImage, required this.proInCart,});
 
@@ -26,7 +27,7 @@ class ProductModel{
         proName: map[DatabaseHelper.columnProductName],
         proPrice: map[DatabaseHelper.columnProductPrice],
         proImage: map[DatabaseHelper.columnProductImage],
-        proInCart: true
+        proInCart: true.obs
     );
   }
 

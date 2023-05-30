@@ -44,7 +44,7 @@ class DatabaseHelper {
   // Insert Product into Local DB
   addProductDataInCart(ProductModel productModel) async
   {
-    final Database database = await initializeDB();
+    var database = await initializeDB();
     var result = await database.insert(tableCart, productModel.toMap());
     print("result : success");
 
@@ -54,23 +54,29 @@ class DatabaseHelper {
 
   // Retrieve All Product from Local DB..
   Future<List<ProductModel>> getCartProducts() async {
-    final Database database = await initializeDB();
+    var database = await initializeDB();
     final List<Map<String, Object?>> queryResult = await database.query(tableCart);
     return queryResult.map((e) => ProductModel.fromMap(e)).toList();
   }
 
   // check Product is added in cart ot not..
   Future<bool> isProductExistsInCart(var proId) async {
-    final Database database = await initializeDB();
+    var database = await initializeDB();
     var result = await database.rawQuery('SELECT EXISTS(SELECT 1 FROM $tableCart WHERE $columnProductId="$proId")',);
     var exists = Sqflite.firstIntValue(result);
     return exists == 1;
   }
 
   Future<int> removeProductFromCart(var proId) async {
-    final Database database = await initializeDB();
+    var database = await initializeDB();
     var result = await database.delete(tableCart, where: '$columnProductId = ?', whereArgs: [proId]);
+    print("result : removeProductFromCart");
     return result;
+  }
+
+  Future<void> deleteMyCartRecords() async {
+    var database = await initializeDB();
+    await database.execute("DELETE FROM $tableCart");
   }
 
 

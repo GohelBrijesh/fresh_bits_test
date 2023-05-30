@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:fresh_bits_test/screens/splashScreen.dart';
+import 'package:fresh_bits_test/app/routes/app_pages.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 Future<void> main() async {
 
-  runApp(MyApp());
-}
+  runApp(
+    GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Fresh bits test",
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+      ),
+    ),
+  );
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-    );
-  }
 
 }
 
